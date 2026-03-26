@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: Doserly Admin Manager API
+  version: 1.2.0
+servers:
+  - url: /api/admin
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /auth/login:
+    post:
+      summary: Admin login
+      responses:
+        '200': { description: Bearer token }
+        '401': { description: Invalid credentials }
+  /products:
+    get:
+      summary: List products
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Product list }
+    post:
+      summary: Create product
+      security: [{ bearerAuth: [] }]
+      responses:
+        '201': { description: Product created }
+  /orders:
+    get:
+      summary: List orders
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Order list }
+  /orders/{id}/status:
+    patch:
+      summary: Update order and payment statuses
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Updated }
+        '404': { description: Order not found }
+  /customers:
+    get:
+      summary: List customers
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Customers list }
+  /settings/theme:
+    get:
+      summary: Get theme settings
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Theme settings }
+    put:
+      summary: Update theme settings
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Theme updated }
+  /analytics/overview:
+    get:
+      summary: Dashboard analytics overview
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Metrics }
+  /shipping:
+    get:
+      summary: List shipping rates
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Shipping rates list }
+    post:
+      summary: Create shipping rate
+      security: [{ bearerAuth: [] }]
+      responses:
+        '201': { description: Shipping rate created }
+  /shipping/{rate_id}:
+    put:
+      summary: Update shipping rate
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Shipping rate updated }
+    delete:
+      summary: Delete shipping rate
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Shipping rate deleted }
+  /discounts/coupons:
+    get:
+      summary: List coupons
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Coupons list }
+    post:
+      summary: Create coupon
+      security: [{ bearerAuth: [] }]
+      responses:
+        '201': { description: Coupon created }
+        '409': { description: Coupon already exists }
+  /discounts/coupons/{coupon_id}:
+    put:
+      summary: Update coupon
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Coupon updated }
+        '404': { description: Coupon not found }
+    delete:
+      summary: Delete coupon
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Coupon deleted }
